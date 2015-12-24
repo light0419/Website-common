@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+    </head>
+
+    <style>
+    body{background-color: #000;height:100000px;}
+   	/*万圣节 banner*/
+	
+	.snowbox{position:absolute; z-index: 2; top: 50px; width:30px; height:30px;}
+   </style>
+    <body>
+
+    <script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js" charset="utf-8"></script>
+    <div class="xuehua" style="width:100%;height:10px;position:fixed;top:0px;left:0px;"></div>
+    <script>
+        (function($){
+            $.fn.snow = function(options){
+            var $flake = $('<div class="snowbox"><img src="http://www.mcake.com/postsystem/docroot/images/kindeditor/20151204/2015120414144333818.png" width="100%"/></div>'),
+            documentHeight  = 885,
+            documentWidth   = $(document).width(),
+            defaults = {
+                minSize     : 10,
+                maxSize     : 20,
+                newOn       : 1000,
+                flakeColor  : "" /* 此处可以定义雪花颜色，若要白色可以改为#FFFFFF */
+
+
+            },
+            options = $.extend({}, defaults, options);
+            var interval= setInterval( function(){
+            var startPositionLeft = Math.random() * documentWidth,
+            startOpacity = 0.5 + Math.random(),
+
+            //startalpha = Math.random()*100,
+
+            sizeFlake = options.minSize + Math.random() * options.maxSize,
+            endPositionTop = documentHeight - 200,
+            endPositionLeft = startPositionLeft - 500 + Math.random() * 500,
+            durationFall = documentHeight * 10 + Math.random() * 5000;
+            $flake.clone().appendTo('.xuehua').css({
+                left: startPositionLeft,
+                //filter:alpha(opacity=startalpha);
+                //'font-size': sizeFlake,
+                width: sizeFlake,
+                height: sizeFlake,
+                color: options.flakeColor
+            }).animate({
+                top: endPositionTop,
+                left: endPositionLeft
+            },durationFall,'linear',function(){
+                $(this).remove()
+            });
+            }, options.newOn);
+            };
+        })(jQuery);
+        $(function(){
+            $.fn.snow({
+                minSize: 20, /* 定义雪花最小尺寸 */
+                maxSize: 50,/* 定义雪花最大尺寸 */
+                newOn: 100  /* 定义密集程度，数字越小越密集 */
+            });
+        });
+
+    </script>
+    </body>
+</html>
